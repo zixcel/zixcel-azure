@@ -2,18 +2,20 @@ import assert from 'node:assert/strict'
 import test from 'node:test'
 import { createControl, operations } from '../dist/index.mjs'
 const account = { provider: "azure", subject: 'synthetic-owner', account: 'synthetic-account' }
-const samples = {"billing.cost-read":{"from":"2026-10-01","to":"2026-10-12"},"account.read": {}, "permissions.read": {"group": "test-group"}, "group.set-tags": {"group": "test-group", "tags": {"env": "test"}}}
+const samples = {"billing.cost-read":{"from":"2026-10-01","to":"2026-10-12"},"account.read":{},"permissions.read":{"group":"test-group"},"group.set-tags":{"group":"test-group","tags":{"env":"test"}},"group.read":{"group":"test-group"}}
 const token = 'synthetic-bearer-not-a-real-account'
 function fixture() {
   const requests = []
-  let state = { initialized: true }
+  const states = new Map()
+  const initial = { initialized: true }
   let status = 200
   const control = createControl(account, { acquire: async () => token }, async (url, init) => {
     assert.equal(init.headers.Authorization, `Bearer ${token}`)
     requests.push({ url, method: init.method, body: init.body })
     if (status !== 200) return new Response('rejected', { status })
-    if (init.method !== 'GET' && !url.includes('testIamPermissions') && !url.includes('CostManagement')) state = JSON.parse(init.body)
-    return new Response(JSON.stringify(state), { status: 200 })
+    const target = new URL(url).pathname
+    if (init.method === 'PATCH') states.set(target, JSON.parse(init.body))
+    return new Response(JSON.stringify(states.get(target) ?? initial), { status: 200 })
   })
   return { control, requests, deny: () => { status = 403 } }
 }
@@ -36,10 +38,14 @@ test('write operations change isolated state and can be observed through the sam
   const plan = f.control.prepare(operation.id, samples[operation.id])
   const grant = f.control.approve(plan, Date.now() + 30000)
   const write = await f.control.execute(grant.id, plan)
-  const read = f.control.prepare('account.read', {})
+  const read = f.control.prepare('group.read', samples['group.read'])
   const readGrant = f.control.approve(read, Date.now() + 30000)
   const observed = await f.control.execute(readGrant.id, read)
   assert.deepEqual(observed.data, write.data)
+  assert.equal(new URL(f.requests[0].url).pathname, new URL(f.requests[1].url).pathname)
+  const unrelated = f.control.prepare('account.read', {})
+  const unrelatedGrant = f.control.approve(unrelated, Date.now() + 30000)
+  assert.notDeepEqual((await f.control.execute(unrelatedGrant.id, unrelated)).data, write.data)
 })
 test('rejects arbitrary API, input fields and resource changes', async () => {
   const f = fixture()

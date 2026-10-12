@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import { createControl, operations } from '@zixcel/provider-azure'
 const account = { provider: "azure", subject: 'synthetic-owner', account: 'synthetic-account' }
-const samples = {"billing.cost-read":{"from":"2026-10-01","to":"2026-10-12"},"account.read": {}, "permissions.read": {"group": "test-group"}, "group.set-tags": {"group": "test-group", "tags": {"env": "test"}}}
+const samples = {"billing.cost-read":{"from":"2026-10-01","to":"2026-10-12"},"account.read":{},"permissions.read":{"group":"test-group"},"group.set-tags":{"group":"test-group","tags":{"env":"test"}},"group.read":{"group":"test-group"}}
 let state = {}, credentialUses = 0
 const control = createControl(account, { acquire: async () => { credentialUses++; return 'synthetic-only-not-a-real-credential' } }, async (_url, init) => {
   if (init.method !== 'GET') state = JSON.parse(init.body)
@@ -12,7 +12,7 @@ assert.ok(write)
 const plan = control.prepare(write.id, samples[write.id])
 const grant = control.approve(plan, Date.now() + 30000)
 const changed = await control.execute(grant.id, plan)
-const read = control.prepare('account.read', {}), readGrant = control.approve(read, Date.now() + 30000)
+const read = control.prepare('group.read', samples['group.read']), readGrant = control.approve(read, Date.now() + 30000)
 const observed = await control.execute(readGrant.id, read)
 assert.deepEqual(observed.data, changed.data)
 const used = credentialUses
