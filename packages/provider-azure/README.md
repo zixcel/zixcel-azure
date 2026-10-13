@@ -63,3 +63,15 @@ or estimates for final provider invoices.
 Apache-2.0. See LICENSE and NOTICE. Source: zixcel/zixcel-azure.
 
 For independent mutation read-back, prepare `group.read` for the same group; subscription identity is not group state. [Resource Groups Get](https://learn.microsoft.com/en-us/rest/api/resources/resource-groups/get?view=rest-resources-2021-04-01).
+
+## Administrator discovery (new source catalog)
+
+`serviceProfile` describes the actual account scope, credential source, bounded operation list, and limits of permission/billing coverage. It contains no credentials, performs no login/request and reports `not-observed`; required permissions remain declarations. Discovery is a separate one-use reviewed read, not automatic account selection or authorization. Each cursor/page requires its own plan and grant. Source additions are not contained in the previously published package version until a new release is accepted.
+
+## Exact cost source (new source behavior)
+
+`billing.cost-read` returns `{ kind, numberEncoding, sourceDigest, value }`. JSON numeric primitives in `value` are their original lexical strings, retaining decimal precision before a caller uses shared exact cost arithmetic. `sourceDigest` hashes the original bounded HTTP bytes. This is ActualCost query data, not a final invoice; do not cast these strings to floating point for accounting or infer that all pages/periods are complete.
+
+Date inputs remain explicit calendar dates and become UTC day boundaries in the request. `query/read` is the read requirement; older Azure role definitions may also expose `query/action`. Neither declaration proves actual IAM access.
+
+Primary references: [Azure Cost Management operations](https://learn.microsoft.com/en-us/azure/role-based-access-control/permissions/management-and-governance#microsoftcostmanagement), [Query API](https://learn.microsoft.com/en-us/rest/api/cost-management/query/usage?view=rest-cost-management-2025-03-01). The adapter reuses Crowsi bounded HTTP; it has no credential store, implicit retry or new grant authority.

@@ -1,6 +1,6 @@
 # OSS source contract: zixcel/zixcel-azure
 
-Local administrator provider integration with bounded read/write operations
+Owner-approved Azure subscription/resource read/write operations, discovery and precision-preserving cost observations.
 
 ## Responsibility boundary
 
