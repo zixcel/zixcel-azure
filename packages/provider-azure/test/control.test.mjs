@@ -2,7 +2,7 @@ import assert from 'node:assert/strict'
 import test from 'node:test'
 import { createControl, operations } from '../dist/index.mjs'
 const account = { provider: "azure", subject: 'synthetic-owner', account: 'synthetic-account' }
-const samples = {"billing.cost-read":{"from":"2026-10-01","to":"2026-10-12"},"account.read":{},"permissions.read":{"group":"test-group"},"group.set-tags":{"group":"test-group","tags":{"env":"test"}},"group.read":{"group":"test-group"}}
+const samples = {"billing.cost-read":{"from":"2026-10-01","to":"2026-10-12"},"account.read":{},"permissions.read":{"group":"test-group"},"group.set-tags":{"group":"test-group","tags":{"env":"test"}},"group.read":{"group":"test-group"},"accounts.list":{},"permissions.subscription-read":{},"providers.list":{}}
 const token = 'synthetic-bearer-not-a-real-account'
 function fixture() {
   const requests = []
