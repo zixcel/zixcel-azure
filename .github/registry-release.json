@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "repository": "zixcel/zixcel-azure",
+  "defaultBranch": "main",
+  "requiredWorkflows": [
+    "provider-control.yml"
+  ],
+  "packages": [
+    {
+      "ecosystem": "npm",
+      "manifest": "packages/provider-azure/package.json",
+      "name": "@zixcel/provider-azure",
+      "installDirectory": "packages/provider-azure"
+    }
+  ]
+}
