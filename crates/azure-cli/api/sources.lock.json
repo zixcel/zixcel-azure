@@ -1,0 +1,21 @@
+{
+  "schema": "zix-api-source-lock/v1",
+  "upstream_url": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/ae348cc71f54a61f5d17472052cfef279a23db6b/specification/resources/resource-manager/Microsoft.Resources/subscriptions/stable/2022-12-01/subscriptions.json",
+  "upstream_sha256": "abbabab6a26c6aa47a5052c59eb3b1e3515bdade61fbafe44feedf69fe941328",
+  "upstream_bytes": 29633,
+  "git_commit": "ae348cc71f54a61f5d17472052cfef279a23db6b",
+  "archive_sha256": null,
+  "archive_member": null,
+  "input_format": "swagger",
+  "reference_sources": {
+    "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/ae348cc71f54a61f5d17472052cfef279a23db6b/specification/common-types/resource-management/v5/types.json": "66767620b8edfbc04093c76b78d168cc59822cd9da1e726d35a9d45b73e642c1"
+  },
+  "selected_api_ids": [
+    "Subscriptions_Get",
+    "Subscriptions_List"
+  ],
+  "routes_sha256": "3a6fade735ae6196a8907c2e8c014f51780e357644c6b2937d3344d2c26086d2",
+  "compiler_repository": "https://github.com/zixcel/cli",
+  "compiler_revision": "c0d0c04eaa17b55491144a52d918810baf2f53a6",
+  "redistributed_content": "interface facts only; no upstream prose, examples or schema bodies"
+}

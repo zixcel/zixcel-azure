@@ -1,0 +1,13 @@
+{
+  "arguments": {
+    "subscription": "00000000-0000-0000-0000-000000000001"
+  },
+  "url": "https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000001?api-version=2022-12-01",
+  "raw": {
+    "subscriptionId": "00000000-0000-0000-0000-000000000001",
+    "displayName": "Synthetic subscription",
+    "tenantId": "00000000-0000-0000-0000-000000000002",
+    "state": "Enabled",
+    "unselected-private-field": "not selected"
+  }
+}

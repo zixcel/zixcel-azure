@@ -1,0 +1,100 @@
+{
+  "schema": "zix-native-policy/v1",
+  "namespace": "azure",
+  "package": "zixcel-azure-cli",
+  "version": "0.1.0",
+  "credential_environment": "ZIX_AZURE_ACCESS_TOKEN",
+  "origin": "https://management.azure.com",
+  "base_path": "",
+  "routes_sha256": "3a6fade735ae6196a8907c2e8c014f51780e357644c6b2937d3344d2c26086d2",
+  "operations": [
+    {
+      "api": "Subscriptions_Get",
+      "command": {
+        "id": "account.read",
+        "words": [
+          "subscriptions",
+          "get"
+        ],
+        "effect": "read",
+        "description": "Read azure subscriptions get.",
+        "required_permissions": [
+          "Microsoft.Resources/subscriptions/read"
+        ],
+        "arguments": [
+          {
+            "name": "subscription",
+            "required": true,
+            "maximum": 36
+          }
+        ]
+      },
+      "path_arguments": {
+        "subscriptionId": "subscription"
+      },
+      "argument_rules": {
+        "subscription": "uuid"
+      },
+      "query": {
+        "api-version": "2022-12-01"
+      },
+      "headers": {},
+      "identity": [
+        {
+          "pointer": "/subscriptionId",
+          "expected": "{subscription}"
+        }
+      ],
+      "projection": {
+        "pointer": "",
+        "collection": false,
+        "fields": {
+          "id": "/subscriptionId",
+          "display-name": "/displayName",
+          "tenant-id": "/tenantId",
+          "state": "/state"
+        },
+        "required": [
+          "id"
+        ],
+        "success_pointer": null
+      }
+    },
+    {
+      "api": "Subscriptions_List",
+      "command": {
+        "id": "accounts.list",
+        "words": [
+          "subscriptions",
+          "list"
+        ],
+        "effect": "read",
+        "description": "Read azure subscriptions list.",
+        "required_permissions": [
+          "Microsoft.Resources/subscriptions/read"
+        ],
+        "arguments": []
+      },
+      "path_arguments": {},
+      "argument_rules": {},
+      "query": {
+        "api-version": "2022-12-01"
+      },
+      "headers": {},
+      "identity": [],
+      "projection": {
+        "pointer": "/value",
+        "collection": true,
+        "fields": {
+          "id": "/subscriptionId",
+          "display-name": "/displayName",
+          "state": "/state"
+        },
+        "required": [
+          "id"
+        ],
+        "success_pointer": null
+      }
+    }
+  ]
+}
