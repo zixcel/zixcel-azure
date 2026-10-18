@@ -1,0 +1,15 @@
+{
+  "operation": "accounts.list",
+  "arguments": {},
+  "url": "https://management.azure.com/subscriptions?api-version=2022-12-01",
+  "raw": {
+    "value": [
+      {
+        "subscriptionId": "00000000-0000-0000-0000-000000000000",
+        "displayName": "Synthetic subscription",
+        "state": "Enabled"
+      }
+    ],
+    "nextLink": "https://other.example.invalid/next"
+  }
+}
