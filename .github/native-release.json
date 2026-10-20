@@ -1,0 +1,6 @@
+{
+  "repository": "zixcel/zixcel-azure",
+  "package": "zixcel-azure-cli",
+  "tag_prefix": "native/azure/v",
+  "workflow": "native-provider.yml"
+}
