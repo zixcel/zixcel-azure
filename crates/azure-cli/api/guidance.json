@@ -1,0 +1,96 @@
+[
+  {
+    "operation": "account.read",
+    "selectors": {},
+    "intent": "read_selected_azure_subscription",
+    "keywords": [
+      "AZURE",
+      "SUBSCRIPTION",
+      "READ"
+    ],
+    "requirements": [
+      {
+        "kind": "audience",
+        "value": "https://management.azure.com",
+        "subject": "azure_credential"
+      },
+      {
+        "kind": "provider_permission",
+        "value": "Microsoft.Resources/subscriptions/read",
+        "subject": "azure_credential"
+      },
+      {
+        "kind": "target_scope",
+        "value": "Selected subscription or credential-visible subscription list; tenant and ARM audience must agree",
+        "subject": "operation"
+      },
+      {
+        "kind": "role",
+        "value": "Azure RBAC allowing the selected read at its subscription scope",
+        "subject": "operator"
+      }
+    ],
+    "next_actions": [
+      {
+        "namespace": "credential",
+        "operation": "help",
+        "purpose": "inspect_secure_credential_usage",
+        "arguments": {},
+        "on": [
+          "context",
+          "authentication"
+        ]
+      }
+    ],
+    "documentation": [
+      "https://learn.microsoft.com/en-us/rest/api/resources/subscriptions"
+    ]
+  },
+  {
+    "operation": "accounts.list",
+    "selectors": {},
+    "intent": "list_visible_azure_subscriptions",
+    "keywords": [
+      "AZURE",
+      "SUBSCRIPTION",
+      "READ"
+    ],
+    "requirements": [
+      {
+        "kind": "audience",
+        "value": "https://management.azure.com",
+        "subject": "azure_credential"
+      },
+      {
+        "kind": "provider_permission",
+        "value": "Microsoft.Resources/subscriptions/read",
+        "subject": "azure_credential"
+      },
+      {
+        "kind": "target_scope",
+        "value": "Selected subscription or credential-visible subscription list; tenant and ARM audience must agree",
+        "subject": "operation"
+      },
+      {
+        "kind": "role",
+        "value": "Azure RBAC allowing the selected read at its subscription scope",
+        "subject": "operator"
+      }
+    ],
+    "next_actions": [
+      {
+        "namespace": "credential",
+        "operation": "help",
+        "purpose": "inspect_secure_credential_usage",
+        "arguments": {},
+        "on": [
+          "context",
+          "authentication"
+        ]
+      }
+    ],
+    "documentation": [
+      "https://learn.microsoft.com/en-us/rest/api/resources/subscriptions"
+    ]
+  }
+]
